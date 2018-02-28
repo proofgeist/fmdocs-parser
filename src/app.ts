@@ -25,9 +25,4 @@ app.post("/scripts", xmlParser, (req, res) => {
   res.json(result);
 });
 
-app.listen(3000, (error: Error) => {
-  if (error) return console.log(error);
-  console.log("listening on port 3000");
-});
-
 export default app;
