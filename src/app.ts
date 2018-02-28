@@ -21,7 +21,6 @@ app.post("/scripts", xmlParser, (req, res) => {
   const folderFilter = parseArray(folderFilterList);
   const xml = req.body;
   const result = scriptsParser(xml, ["API", "Public"]);
-
   res.json(result);
 });
 

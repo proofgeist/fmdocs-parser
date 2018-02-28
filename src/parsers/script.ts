@@ -34,7 +34,14 @@ export default (xml: string, folderFilter: Array<string> = []) => {
     if (ScriptArray) {
       details = ScriptArray.map((script: any) => {
         const commentBlock = commentParser(script);
+        let pathArray = currentPath.split("/");
+        pathArray.shift();
+        pathArray = pathArray.filter((item: string) => {
+          return item.toLowerCase() !== "public";
+        });
         return {
+          apiGroup: pathArray,
+          apiFullQaulifedGroup: pathArray.join("."),
           path: currentPath + "/" + script.name,
           scriptName: script.name,
           commentBlock

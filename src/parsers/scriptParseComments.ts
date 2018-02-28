@@ -34,7 +34,7 @@ const commentBlockLineArray = (steps: any) => {
     })(item);
 
     if (tag === "description" || tag === "author") {
-      let description = item.substr(1).trim();
+      let description = item.trim();
       if (description.includes("@")) {
         let s = description.split(" ");
         s.shift();
@@ -75,7 +75,7 @@ const commentBlockLineArray = (steps: any) => {
       value
     };
   });
-  console.log(commentArray);
+
   return commentArray;
 };
 
