@@ -1,0 +1,254 @@
+<fmxmlsnippet type="FMPerceptionObjectList">
+<Script includeInMenu="False" runFullAccess="False" id="113" name="Save QBO Record To FM ( {Entity, Records )">
+						<StepList>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># /##</StepText>
+								<Text> /##</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># Saves a QBO record to FileMaker</StepText>
+								<Text> Saves a QBO record to FileMaker</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @param {object} params</StepText>
+								<Text> @param {object} params</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @param {string} params.Entity the target Entity</StepText>
+								<Text> @param {string} [params.Entity=Item] the target Entity</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @param {object} params.Record a json Record object</StepText>
+								<Text> @param {object} params.Record a json Record object</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @returnSuccess {object} error</StepText>
+								<Text> @returnSuccess {object} error</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @returnSuccess {number} error.errorCode = 0</StepText>
+								<Text> @returnSuccess {number} error.errorCode = 0</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @returnError {object} error</StepText>
+								<Text> @returnError {object} error</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># @returnError {number} error.errorCode &lt;&gt; 0</StepText>
+								<Text> @returnError {number} error.errorCode &lt;&gt; 0</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText># #/</StepText>
+								<Text> #/</Text>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $params; Value:Get(ScriptParameter) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[Get(ScriptParameter)]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">Get</Chunk>
+										<Chunk type="NoRef">(</Chunk>
+										<Chunk type="FunctionRef">ScriptParameter</Chunk>
+										<Chunk type="NoRef">)</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$params</Name>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $Entity; Value:JSONGetElement ( $params ;  "Entity" ) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[JSONGetElement ( $params ;  "Entity" )]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">JSONGetElement</Chunk>
+										<Chunk type="NoRef"> ( $params ;  "Entity" )</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$Entity</Name>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $Record; Value:JSONGetElement ( $params ;  "Record" ) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[JSONGetElement ( $params ;  "Record" )]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">JSONGetElement</Chunk>
+										<Chunk type="NoRef"> ( $params ;  "Record" )</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$Record</Name>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="68" name="If">
+								<StepText>If [ $Entity = "Invoice" or $Entity = "PurchaseOrder" ]</StepText>
+								<Calculation><![CDATA[$Entity = "Invoice" or $Entity = "PurchaseOrder"]]></Calculation>
+								<DisplayCalculation>
+									<Chunk type="NoRef">$Entity = "Invoice" </Chunk>
+									<Chunk type="FunctionRef">or</Chunk>
+									<Chunk type="NoRef"> $Entity = "PurchaseOrder"</Chunk>
+								</DisplayCalculation>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText>#addresses can be goofy on transactions, so we normaliza them here</StepText>
+								<Text>addresses can be goofy on transactions, so we normaliza them here</Text>
+							</Step>
+							<Step enable="True" id="1" name="Perform Script">
+								<StepText>Perform Script [ “Normailze Addresses On Transactions ( Data )”; Parameter: $record ]</StepText>
+								<Calculation><![CDATA[$record]]></Calculation>
+								<DisplayCalculation>
+									<Chunk type="NoRef">$record</Chunk>
+								</DisplayCalculation>
+								<Script id="442" name="Normailze Addresses On Transactions ( Data )"/>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $record; Value:Get(ScriptResult) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[Get(ScriptResult)]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">Get</Chunk>
+										<Chunk type="NoRef">(</Chunk>
+										<Chunk type="FunctionRef">ScriptResult</Chunk>
+										<Chunk type="NoRef">)</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$record</Name>
+							</Step>
+							<Step enable="True" id="70" name="End If">
+								<StepText>End If</StepText>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $params; Value:JSONSetElement (  ""; 
+ 
+	[ "Entity" ; $Entity ; JSONString ];
+	[ "Record" ; $Record ; JSONObject ]
+ 
+) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[JSONSetElement (  ""; 
+ 
+	[ "Entity" ; $Entity ; JSONString ];
+	[ "Record" ; $Record ; JSONObject ]
+ 
+)]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">JSONSetElement</Chunk>
+										<Chunk type="NoRef"> (  ""; 
+ 
+	[ "Entity" ; $Entity ; </Chunk>
+										<Chunk type="FunctionRef">JSONString</Chunk>
+										<Chunk type="NoRef"> ];
+	[ "Record" ; $Record ; </Chunk>
+										<Chunk type="FunctionRef">JSONObject</Chunk>
+										<Chunk type="NoRef"> ]
+ 
+)</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$params</Name>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="1" name="Perform Script">
+								<StepText>Perform Script [ “Configure Saving To FM( {Entity ; Record })”; Parameter: $params ]</StepText>
+								<Calculation><![CDATA[$params]]></Calculation>
+								<DisplayCalculation>
+									<Chunk type="NoRef">$params</Chunk>
+								</DisplayCalculation>
+								<Script id="443" name="Configure Saving To FM( {Entity ; Record })"/>
+							</Step>
+							<Step enable="True" id="141" name="Set Variable">
+								<StepText>Set Variable [ $error; Value:Get ( ScriptResult ) ]</StepText>
+								<Value>
+									<Calculation><![CDATA[Get ( ScriptResult )]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="FunctionRef">Get</Chunk>
+										<Chunk type="NoRef"> ( </Chunk>
+										<Chunk type="FunctionRef">ScriptResult</Chunk>
+										<Chunk type="NoRef"> )</Chunk>
+									</DisplayCalculation>
+								</Value>
+								<Repetition>
+									<Calculation><![CDATA[1]]></Calculation>
+									<DisplayCalculation>
+										<Chunk type="NoRef">1</Chunk>
+									</DisplayCalculation>
+								</Repetition>
+								<Name>$error</Name>
+							</Step>
+							<Step enable="True" id="89" name="# (comment)">
+								<StepText/>
+							</Step>
+							<Step enable="True" id="103" name="Exit Script">
+								<StepText>Exit Script [ Result:  $error ]</StepText>
+								<Calculation><![CDATA[ $error]]></Calculation>
+								<DisplayCalculation>
+									<Chunk type="NoRef"> $error</Chunk>
+								</DisplayCalculation>
+							</Step>
+						</StepList>
+					</Script>
+</fmxmlsnippet>

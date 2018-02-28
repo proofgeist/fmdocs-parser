@@ -1,0 +1,5 @@
+{
+  "alias": ["fmdocs-parser.geist.sh"],
+  "files": ["dist"],
+  "dotenv": true
+}
