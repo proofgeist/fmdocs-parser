@@ -4,8 +4,10 @@ const commentBlockLineArray = (steps: any) => {
     return step.id === "89" && step.enable === "True";
   });
 
-  const commentTextArray = commentSteps.map((commentStep: any) => {
-    return commentStep.StepText[0];
+  const commentTextArray = commentSteps.map(commentStep => {
+    return commentStep.StepText
+      ? commentStep.StepText[0]
+      : commentStep.Text ? commentStep.Text[0] : "";
   });
 
   let commentTextLines: string = "";
@@ -20,6 +22,7 @@ const commentBlockLineArray = (steps: any) => {
   commentArray = commentArray.filter((item: string) => {
     return item !== "" && !item.includes("/##") && !item.includes("#/");
   });
+
   commentArray = commentArray.map((item: string) => {
     const tag = ((line: string) => {
       const start = line.indexOf("@");
@@ -72,13 +75,13 @@ const commentBlockLineArray = (steps: any) => {
       value
     };
   });
-
+  console.log(commentArray);
   return commentArray;
 };
 
 const commentBlockObj = (script: any) => {
   // const script = scriptBlock[0].Script[0];
-  const steps = script.StepList[0].Step;
+  const steps = script.StepList ? script.StepList[0].Step : script.Step;
 
   const comments = commentBlockLineArray(steps);
   if (!comments) return null;
